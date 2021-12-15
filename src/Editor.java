@@ -22,7 +22,7 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
     public JEditorPane textPane;
     public boolean changed = false;
     private JMenuBar menu;
-    private JMenuItem copy, paste, cut;
+    private JMenuItem copy, paste, cut, about;
     private File file;
 
     public Editor() {
@@ -38,7 +38,8 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         this.setIconImage(icon);
         setJMenuBar(menu);
         buildMenu();
-        setSize(500, 500);
+        setSize(1000, 650);
+        setLocation(420, 200);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -126,10 +127,17 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
 
 
     public void buildHelp(){
-        JMenu about = new JMenu("帮助(H)");
-        about.setFont(new Font("黑体", Font.PLAIN, 15));
-        about.setMnemonic('H');
-        menu.add(about);
+        JMenu help = new JMenu("帮助(H)");
+        help.setFont(new Font("黑体", Font.PLAIN, 15));
+        help.setMnemonic('H');
+        menu.add(help);
+
+        about = new JMenuItem("关于记事本");
+        about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_DOWN_MASK));
+        about.addActionListener(this);
+        help.add(about);
+
+
     }
 
 
@@ -157,6 +165,8 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         } else if (action.equals("查找")) {
             FindDialog find = new FindDialog(this, true);
             find.showDialog();
+        } else if (action.equals("关于记事本")){
+            help();
         }
     }
 
@@ -241,6 +251,20 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void help(){
+        StringBuilder msg = new StringBuilder();
+        msg.append("<html>关于 Stack 记事本");
+        msg.append("<br />——————————————————<br />");
+        msg.append("<center> 开发人员列表 </center>");
+        msg.append("<center> 王鹏杰 </center>");
+        msg.append("<center> 冯重伟 </center>");
+        msg.append("<center> 刘纪宏 </center>");
+        msg.append("<center> 崔建文 </center>");
+        msg.append("<br /><br />Copyright ©2021 Stack Develop Group</html>");
+        System.out.println(msg);
+        JOptionPane.showMessageDialog(null, msg, "关于记事本", JOptionPane.PLAIN_MESSAGE);
     }
 
     @Override
