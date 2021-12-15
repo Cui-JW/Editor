@@ -1,7 +1,4 @@
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.sun.awt.AWTUtilities;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,8 +34,8 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
 
         menu = new JMenuBar();
         Toolkit tool=menu.getToolkit(); //得到一个Toolkit对象
-        Image myimage=tool.getImage("xueren.gif"); //由tool获取图像
-        this.setIconImage(myimage);
+        Image icon=tool.getImage("./img.png"); //由tool获取图像
+        this.setIconImage(icon);
         setJMenuBar(menu);
         buildMenu();
         setSize(500, 500);
@@ -56,6 +53,7 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
     private void buildMenu() {
         buildFileMenu();
         buildEditMenu();
+        buildHelp();
     }
 
     private void buildFileMenu() {
@@ -125,6 +123,15 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         sall.addActionListener(this);
         edit.add(sall);
     }
+
+
+    public void buildHelp(){
+        JMenu about = new JMenu("帮助(H)");
+        about.setFont(new Font("黑体", Font.PLAIN, 15));
+        about.setMnemonic('H');
+        menu.add(about);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
