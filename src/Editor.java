@@ -1,8 +1,9 @@
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.sun.awt.AWTUtilities;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -35,24 +36,20 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         textPane.getDocument().addDocumentListener(this);
 
         menu = new JMenuBar();
+        Toolkit tool=menu.getToolkit(); //得到一个Toolkit对象
+        Image myimage=tool.getImage("xueren.gif"); //由tool获取图像
+        this.setIconImage(myimage);
         setJMenuBar(menu);
         buildMenu();
-
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {
-//        FlatLightLaf.setup();
-        FlatDarculaLaf.setup();
-//        FlatDarkLaf.setup();
+        FlatLightLaf.setup();
         new Editor();
-       /* try {
-            UIManager.setLookAndFeel( new FlatDarculaLaf() );
-        } catch( Exception ex ) {
-            System.err.println( "Failed to initialize LaF" );
-        }*/
+
 
     }
 
@@ -62,7 +59,8 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
     }
 
     private void buildFileMenu() {
-        JMenu file = new JMenu("文件");
+        JMenu file = new JMenu("文件(F)");
+        file.setFont(new Font("黑体", Font.PLAIN, 15));
         file.setMnemonic('F');
         menu.add(file);
         JMenuItem n = new JMenuItem("新建");
@@ -80,10 +78,10 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         save.setMnemonic('S');
         save.addActionListener(this);
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
-        JMenuItem saveas = new JMenuItem("另存为...");
-        saveas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
-        file.add(saveas);
-        saveas.addActionListener(this);
+        JMenuItem saveAs = new JMenuItem("另存为...");
+        saveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+        file.add(saveAs);
+        saveAs.addActionListener(this);
         JMenuItem quit = new JMenuItem("退出");
         file.add(quit);
         quit.addActionListener(this);
@@ -92,7 +90,8 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
     }
 
     private void buildEditMenu() {
-        JMenu edit = new JMenu("编辑");
+        JMenu edit = new JMenu("编辑(E)");
+        edit.setFont(new Font("黑体", Font.PLAIN, 15));
         menu.add(edit);
         edit.setMnemonic('E');
         // cut
