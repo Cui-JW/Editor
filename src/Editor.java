@@ -22,7 +22,7 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
     public JEditorPane textPane;
     public boolean changed = false;
     private JMenuBar menu;
-    private JMenuItem copy, paste, cut, about;
+    private JMenuItem copy, paste, cut, about,font;
     private File file;
 
     public Editor() {
@@ -54,9 +54,13 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
     private void buildMenu() {
         buildFileMenu();
         buildEditMenu();
+        buildFormat();
         buildHelp();
     }
 
+    /*
+     * 构建文件菜单和文件菜单选项组
+     */
     private void buildFileMenu() {
         JMenu file = new JMenu("文件(F)");
         file.setFont(new Font("黑体", Font.PLAIN, 15));
@@ -88,6 +92,9 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
     }
 
+    /*
+     * 构建编辑菜单和编辑菜单选项组
+     */
     private void buildEditMenu() {
         JMenu edit = new JMenu("编辑(E)");
         edit.setFont(new Font("黑体", Font.PLAIN, 15));
@@ -125,7 +132,27 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         edit.add(sall);
     }
 
+    /*
+     * 构建格式菜单和格式菜单组
+     * setMnemonic 设置菜单的快捷键
+     */
+    public void buildFormat(){
+        JMenu format = new JMenu("格式(O)");
+        format.setFont(new Font("黑体", Font.PLAIN, 15));
+        format.setMnemonic('O');
+        menu.add(format);
+        font = new JMenuItem("字体(W)");
+        font.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
+        font.addActionListener(this);
+        format.add(font);
 
+
+
+    }
+
+    /*
+     * 构建帮助菜单和帮助菜单选项组
+     */
     public void buildHelp(){
         JMenu help = new JMenu("帮助(H)");
         help.setFont(new Font("黑体", Font.PLAIN, 15));
@@ -141,6 +168,9 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
     }
 
 
+    /*
+     * 对菜单栏进行事件监听
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
@@ -179,6 +209,9 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         setTitle("Editor");
     }
 
+    /*
+     * 打开文件进行文件加载
+     */
     private void loadFile() {
         JFileChooser dialog = new JFileChooser(System.getProperty("user.home"));
         dialog.setMultiSelectionEnabled(false);
@@ -253,6 +286,10 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         }
     }
 
+    /*
+     * 显示帮助中关于记事本的内容
+     * 开发者：王鹏杰
+     */
     public void help(){
         StringBuilder msg = new StringBuilder();
         msg.append("<html>关于 Stack 记事本");
@@ -263,7 +300,6 @@ public class Editor extends JFrame implements ActionListener, DocumentListener {
         msg.append("<center> 刘纪宏 </center>");
         msg.append("<center> 崔建文 </center>");
         msg.append("<br /><br />Copyright ©2021 Stack Develop Group</html>");
-        System.out.println(msg);
         JOptionPane.showMessageDialog(null, msg, "关于记事本", JOptionPane.PLAIN_MESSAGE);
     }
 
